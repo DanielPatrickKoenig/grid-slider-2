@@ -20,7 +20,10 @@
             v-if="loading"
             @dismiss="loading = false"
         >
-            <GameLoader @game-selected="gameSelected" />
+            <GameLoader 
+                @game-selected="gameSelected"
+                @game-deleted="gameDeleted"
+            />
         </ModalWindow>
         <YesNoModal
             v-if="showOverwriteWarning"
@@ -35,6 +38,13 @@
             @no="showLostProgressWarning = false;"
         >
             You have not saved your current game. Do you want to continue?
+        </YesNoModal>
+        <YesNoModal
+            v-if="showDeleteWarning"
+            @yes="confirmDeleteGame"
+            @no="showDeleteWarning = false;"
+        >
+            Are you sure you want to delete this game?
         </YesNoModal>
     </div>
 </template>
@@ -67,15 +77,18 @@ export default {
             loading: false,
             showOverwriteWarning: false,
             showLostProgressWarning: false,
+            showDeleteWarning: false,
             gameToLoad: {},
-            saved: true
+            saved: true,
+            gameToDelete: ''
+
         }
     },
     computed: {
         ...mapState(['currentLevel', 'currentPattern', 'currentBadges', 'savedGames'])
     },
     methods: {
-        ...mapActions(['setGameData', 'hasSavedGame', 'loadGameData', 'saveGame']),
+        ...mapActions(['setGameData', 'hasSavedGame', 'loadGameData', 'saveGame', 'deleteGame']),
         onUpdated(e){
             if(e.levelComplete){
                 alert('win');
@@ -124,6 +137,14 @@ export default {
             this.saved = true;
             this.gameName = '';
             this.showOverwriteWarning = false;
+        },
+        gameDeleted(game){
+            this.gameToDelete = game;
+            this.showDeleteWarning = true;
+        },
+        confirmDeleteGame(){
+            this.deleteGame(this.gameToDelete);
+            this.showDeleteWarning = false;
         }
     },
     created(){

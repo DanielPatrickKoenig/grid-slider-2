@@ -27,8 +27,9 @@ export default new Vuex.Store({
       localStorage.setItem(patternTag, JSON.stringify(state.currentPattern)); 
     },
     saveGames(state, name){
-      state.savedGames[name] = {currentBadges: state.currentBadges, currentLevel: state.currentLevel, currentPattern: state.currentPattern, date: new Date().getTime()};
-      console.log(state.savedGames);
+      if(name){
+        state.savedGames[name] = {currentBadges: state.currentBadges, currentLevel: state.currentLevel, currentPattern: state.currentPattern, date: new Date().getTime()};
+      }
       localStorage.setItem(gameMenifestTag, JSON.stringify(state.savedGames));
     },
     updateSavedGames(state, data){
@@ -46,7 +47,7 @@ export default new Vuex.Store({
       commit('updateGameData', {currentLevel: level ? Number(level) : baseLevel, currentBadges: badges ? JSON.parse(badges) : [], currentPattern: pattern ? JSON.parse(pattern) : []});
     },
     loadGames({commit}){
-      const savedGames = localStorage.getItem(gameMenifestTag)
+      const savedGames = localStorage.getItem(gameMenifestTag);
       commit('updateSavedGames', savedGames ? JSON.parse(savedGames) : {});
     },
     saveGame({commit}, name){
@@ -54,6 +55,17 @@ export default new Vuex.Store({
     },
     hasSavedGame(){
       return localStorage.getItem(patternTag) !== undefined && localStorage.getItem(patternTag) !== null && localStorage.getItem(patternTag) !== '' && localStorage.getItem(patternTag) !== '[]';
+    },
+    deleteGame({commit}, data){
+      const loadedGames = JSON.parse(localStorage.getItem(gameMenifestTag));
+      let savedGames = {};
+      for(let game in loadedGames){
+        if(game !== data){
+          savedGames[game] = loadedGames[game];
+        }
+      }
+      commit('updateSavedGames', savedGames);
+      commit('saveGames');
     }
   },
   modules: {
