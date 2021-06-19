@@ -1,0 +1,112 @@
+$openWidth: 60%;
+$openDuration: .5s;
+$navHeight: 2.5rem;
+
+body{
+    background-color: $bg-color;
+}
+.inner-page{
+    margin-top: $navHeight;
+}
+.blocker{
+    display:block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,.4);
+}
+#nav{
+    @keyframes expand-menu {
+        from {
+            width: 0%;
+        }
+        to {
+            width: $openWidth;
+        }
+    }
+    @keyframes contract-menu {
+        from {
+            width: $openWidth;
+        }
+        to {
+            width: 0%;
+        }
+    }
+    
+    position:fixed;
+    top:0;
+    left:0;
+    right:0;
+    height:$navHeight;
+    display:flex;
+    justify-content: space-between;
+    .nav-menu-icon{
+        position: relative;
+        width: 2rem;
+        height: 2rem;
+        padding: .25rem;
+        &.hamburger{
+
+        }
+        &.star{
+    
+        }
+        
+    }
+    .nav-menu-icon{
+        animation-duration: $openDuration;
+        animation-iteration-count: 1;
+        animation-timing-function: ease-in-out;
+        opacity: 0;
+        &.activated{
+            opacity: 1;
+        }
+    }
+    .slide-menu{
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        width: $openWidth;
+        display:flex;
+        overflow: hidden scroll;
+        flex-direction: column;
+        background-color: rgba(255,255,255,.9);
+        animation-duration: $openDuration;
+        animation-iteration-count: 1;
+        animation-timing-function: ease-in-out;
+        opacity: 0;
+        > * {
+            display:block;
+            min-width: 10rem;
+            padding: .25rem;
+            &:first-child {
+                margin-top: $navHeight;
+            }
+        }
+        &.activated{
+            opacity: 1;
+        }
+        &.main-menu{
+            right: 0;
+            align-items: flex-start;
+            margin-right: 0%;
+            
+        }
+        &.game-menu{
+            left: 0;
+            align-items: flex-start;
+            margin-left: 0%;
+            
+        }
+        &.open{
+            animation-name: expand-menu;
+            width: $openWidth;
+        }
+        &.closed{
+            animation-name: contract-menu;
+            width: 0%;
+        }
+    }
+}
