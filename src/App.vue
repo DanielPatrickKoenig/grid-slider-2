@@ -5,12 +5,12 @@
       <div class="slide-menu game-menu" :class="[menuStates.game.state, {activated: menuStates.game.activated}]">
         <div>Badges Rock</div>
       </div>
-      <font-awesome-icon icon="star" class="nav-menu-icon star" :class="{activated: menuStates.main.activated}" @click="toggleMenu('game')" />
+      <font-awesome-icon icon="star" class="nav-menu-icon app-icon star" :class="{activated: menuStates.main.activated}" @click="toggleMenu('game')" />
       <div class="slide-menu main-menu" :class="[menuStates.main.state, {activated: menuStates.main.activated}]">
         <router-link to="/">Home</router-link>
         <router-link to="/about">About</router-link>
       </div>
-      <font-awesome-icon icon="bars" class="nav-menu-icon hamburger" :class="{activated: menuStates.main.activated}" @click="toggleMenu('main')" />
+      <font-awesome-icon icon="bars" class="nav-menu-icon app-icon hamburger" :class="{activated: menuStates.main.activated}" @click="toggleMenu('main')" />
     </div>
     <router-view class="inner-page"/>
   </div>

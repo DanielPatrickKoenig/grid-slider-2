@@ -1,6 +1,7 @@
 <template>
   <ModalWindow
     :closable="false"
+    :dialog="true"
   >
     <div>
         <slot>

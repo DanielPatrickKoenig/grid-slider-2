@@ -11,6 +11,7 @@
         <ModalWindow 
             v-if="saving"
             cta="save"
+            :dialog="true"
             @cta-clicked="saveCurrentGame"
             @dismiss="saving = false;gameName = ''"
         >

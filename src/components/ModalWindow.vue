@@ -1,16 +1,21 @@
 <template>
-  <div class="modal-widnow">
+  <div class="modal-widnow blocker" :class="{ dialog }">
       <div class="inner-window">
           <slot>
               WINDOW CONTENT
           </slot>
           <div 
             class="navigation"
-            v-if="cta || closable"
+            v-if="cta"
           >
               <button v-if="cta" @click="ctaClicked">{{cta}}</button>
-              <button v-if="closable" @click="close">{{cta ? 'cancel' : 'close'}}</button>
           </div>
+          <font-awesome-icon
+            v-if="closable"
+            icon="times" 
+            class="app-icon modal-close-icon" 
+            @click="close" 
+          />
       </div>
       
   </div>
@@ -23,7 +28,8 @@ export default {
         closable: {
             type: Boolean,
             default: true
-        }
+        },
+        dialog: Boolean
     },
     methods: {
         ctaClicked () {

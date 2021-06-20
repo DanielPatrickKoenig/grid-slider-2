@@ -1,0 +1,26 @@
+.modal-widnow{
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    > .inner-window{
+        height: auto;
+        width: 100%;
+        overflow: hidden scroll;
+        padding: 2rem;
+        background-color: $modal-bg;
+        position: relative;
+        .modal-close-icon{
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
+    }
+    &.dialog{
+        align-items: center;
+        > .inner-window{
+            width: auto;
+            min-width: 16rem;
+        }
+    }
+    
+}

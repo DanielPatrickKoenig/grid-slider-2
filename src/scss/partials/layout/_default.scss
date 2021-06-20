@@ -8,6 +8,11 @@ body{
 .inner-page{
     margin-top: $navHeight;
 }
+.app-icon{
+    width: 2rem !important;
+    height: 2rem;
+    padding: .25rem;
+}
 .blocker{
     display:block;
     position: fixed;
@@ -44,9 +49,6 @@ body{
     justify-content: space-between;
     .nav-menu-icon{
         position: relative;
-        width: 2rem;
-        height: 2rem;
-        padding: .25rem;
         &.hamburger{
 
         }
