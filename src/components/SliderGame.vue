@@ -7,7 +7,7 @@
 <script>
 import {PixiInstance, PixiDraw, PixiUtils, PixiAction} from '../utils/PixiManager.js';
 import {getPiecesByProperty, randomizeStructure, checkForWin} from '../utils/GameLogic.js';
-import {reshape} from '../utils/Utilities.js';
+import {reshape, gameColors} from '../utils/Utilities.js';
 export default {
     props:{
         pattern: Array,
@@ -23,7 +23,7 @@ export default {
             structure: this.loaded ? this.pattern : randomizeStructure(this.pattern),
             action: new PixiAction(),
             utils: new PixiUtils(),
-            colors: [0xff0000, 0x00ff00, 0x0000ff, 0xf00f00, 0x0f00f0, 0x00f00f, 0xffff00, 0xff00ff, 0x00ffff],
+            colors: gameColors.map(item => Number(`0x${item.split('#').join('')}`)),
             dragger: null,
             dragCycles: 0,
             dragCycleMax: 15,

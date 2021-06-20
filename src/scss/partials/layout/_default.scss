@@ -5,6 +5,19 @@ $navHeight: 2.5rem;
 body{
     background-color: $bg-color;
 }
+button{
+    border: none;
+    padding: .3rem .5rem;
+    border-radius: 5rem;
+    text-transform: uppercase;
+    background-color: $primary-link;
+    font-size: .7rem;
+    margin: .2rem .1rem;
+    &.secondary{
+        background-color: $secondary-link;
+
+    }
+}
 .inner-page{
     margin-top: $navHeight;
 }

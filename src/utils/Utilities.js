@@ -50,4 +50,5 @@ function getParameterByName(name, url) {
     if (!results[2]) return '';
     return decodeURIComponent(results[2].replace(/\+/g, " "));
 }
-export {shuffle, reshape, getParameterByName, flatten};
+const gameColors = ['#ff0000', '#00ff00', '#0000ff', '#f00f00', '#0f00f0', '#00f00f', '#ffff00', '#ff00ff', '#00ffff'];
+export {shuffle, reshape, getParameterByName, flatten, gameColors};
