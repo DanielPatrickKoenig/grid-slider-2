@@ -3,48 +3,47 @@
         <div>
             <input type="text" v-model="searchParams.name" />
         </div>
-        <div>
-            <button @click="currentMode = 0">Grid</button>
-            <button @click="currentMode = 1">List</button>
+        <div class="load-menu-filters">
+            <div class="load-menu-date-selector"></div>
+            <div class="load-menu-modes">
+                <a 
+                    @click="currentMode = 0"
+                    :class="{selected: currentMode === 0}"
+                >
+                    <font-awesome-icon icon="th" />
+                </a>
+                <a 
+                    @click="currentMode = 1"
+                    :class="{selected: currentMode === 1}"
+                >
+                    <font-awesome-icon icon="list" />
+                </a>
+            </div>
         </div>
-        <ul :class="modes[currentMode]">
-            <li 
-                v-for="(game, key, i) in savedGames" 
-                :key="i"
-                v-show="shouldShowGame(key)"
-            >
-                <div class="preview">
-                    <div 
-                        v-for="(row, i) in game.currentPattern" 
-                        :key="i"
-                        :style="{height: `${100 / game.currentPattern.length}%`}"
-                    >
-                        <div
-                            v-for="(block, j) in row" 
-                            :key="j"
-                            :style="{width: `${100 / row.length}%`, height: '100%', 'background-color': colors[block]}"
-                        >
-                            &nbsp;
-                        </div>
-                    </div>
-                </div>
-                <div class="details">
-                    <span class="name">{{key}}</span>
-                    <span>({{game.currentLevel}} | {{formattedDate(game.date)}})</span>
-                </div>
-                <div class="actions">
-                    <button @click="load(game)">Load</button>
-                    <button @click="deleteGame(key)" class="secondary">Delete</button>
-                </div>
-            </li>
-        </ul>
+        
+        <div class="game-list-container">
+            <ul :class="modes[currentMode]">
+                <SavedGameItem
+                    v-for="(game, key, i) in savedGames" 
+                    :key="i"
+                    :name="key"
+                    :game="game"
+                    @load="load"
+                    @delete="deleteGame"
+                    v-show="shouldShowGame(key)"
+                />
+            </ul>
+        </div>
     </div>
 </template>
 
 <script>
 import { mapState } from 'vuex';
-import { gameColors } from '../utils/Utilities.js';
+import SavedGameItem from './SavedGameItem.vue';
 export default {
+    components: {
+        SavedGameItem
+    },
     data () {
         return {
             searchParams: {
@@ -56,8 +55,7 @@ export default {
                 'grid-mode',
                 'list-mode'
             ],
-            currentMode: 1,
-            colors: gameColors
+            currentMode: 1
         }
     },
     computed: {
@@ -65,12 +63,6 @@ export default {
         shouldShowGame () {
             return key => {
                 return key.toLowerCase().includes(this.searchParams.name.toLowerCase());
-            }
-        },
-        formattedDate(){
-            return value => {
-                const date = new Date(value);
-                return [date.getMonth() + 1, date.getDate(), date.getFullYear()].join('/');
             }
         }
     },

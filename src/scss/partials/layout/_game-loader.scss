@@ -1,14 +1,48 @@
 .game-loader{
+    .game-list-container{
+        box-shadow: 0 2px 0 $border-color, 0 -2px 0 $border-color;;
+        position: absolute;
+        bottom: 2rem;
+        top: 6rem;
+        left: 1rem;
+        right: 1rem;
+        overflow: hidden scroll;
+    }
+    .load-menu-filters{
+        display: flex;
+        justify-content: space-between;
+        .load-menu-date-selector{
+            
+        }
+        .load-menu-modes{
+            font-size: 1.8rem;
+            color: $unselected-item-color;
+            a{
+                &:first-child{
+                    &::after{
+                        content: " | ";
+                        color: $unselected-item-color;
+                    }
+                }
+                &.selected{
+                    color: $selected-item-color;
+                }
+            }
+        }
+    }
+    
     ul{
         margin: 0;
         padding: 0;
         display: flex;
-        flex-wrap: wrap;
+        
+        
+
         > li{
             margin: .1rem;
             display: flex;
             justify-content: space-between;
-            box-shadow: 0 0 0 1px inset;
+            
             .preview{
                 width: 4rem;
                 height: 4rem;
@@ -31,13 +65,18 @@
                 display:flex;
             }
         }
+        $columnWidth: 33%;
         &.grid-mode{
-            flex-wrap: wrap;
+            display: grid;
+            grid-template-columns: $columnWidth $columnWidth $columnWidth;
+            column-gap: .1em;
+            row-gap: 1em;
             > li{
-                width: 32%;
+                
                 flex-direction: column;
                 align-items: center;
-                justify-content: space-between;
+                padding: .1em;
+                border-bottom: 1px solid $border-color;
                 .details{
                     align-items: center;
                     padding: .5rem;
@@ -52,11 +91,19 @@
             flex-direction: column;
             > li{
                 padding: .2rem;
+                &:not(:last-child){
+                    border-bottom: 1px solid $border-color;
+                }
+                
                 .details{
                     padding: 0 .5rem;
+                    max-width: 36%;
                 }
                 .actions{
-                    flex-direction: column;
+                    max-height: 2.5rem;
+                    button{
+                        min-width: 4rem;
+                    }
                 }
                 .preview{
                     width: 3rem;
