@@ -69,7 +69,7 @@ export default {
     data () {
         return {
             selectedPattern: null,
-            level: 3,
+            level: 4,
             badges: [],
             useSymbols: false,
             hasSave: false,
@@ -153,7 +153,7 @@ export default {
     },
     async mounted () {
         this.hasSave = await this.hasSavedGame();
-        this.selectedPattern = this.hasSave ? this.currentPattern : createLevel(this.level, this.useSymbols); 
+        this.selectedPattern = createLevel(this.level, this.useSymbols); 
     }
 }
 </script>

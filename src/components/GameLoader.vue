@@ -4,7 +4,43 @@
             <input type="text" v-model="searchParams.name" />
         </div>
         <div class="load-menu-filters">
-            <div class="load-menu-date-selector"></div>
+            <div>
+                <div class="filter-item load-menu-date-selector">
+                    <button @click="showDateFilter = true">
+                        Date
+                    </button>
+                    <div>
+                        <PopperPod v-if="showDateFilter">
+                            <div class="filter-content">
+                                <div>
+                                    Date Filter
+                                </div>
+                                <a @click="showDateFilter = false"><font-awesome-icon icon="times" /></a>
+                            </div>
+                        </PopperPod>
+
+                    </div>
+                </div>
+                <div class="filter-item load-menu-level-selector">
+                    <button @click="showLevelFilter = true">
+                        Level
+                    </button>
+                    <div>
+                        <PopperPod v-if="showLevelFilter">
+                            <div class="filter-content">
+                                <div>
+                                    <LevelFilter 
+                                        :games="savedGames"
+                                        @filter="filterLevels"
+                                    />
+                                </div>
+                                <a @click="showLevelFilter = false"><font-awesome-icon icon="times" /></a>
+                            </div>
+                        </PopperPod>
+                    </div>
+                </div>
+            </div>
+            
             <div class="load-menu-modes">
                 <a 
                     @click="currentMode = 0"
@@ -40,9 +76,13 @@
 <script>
 import { mapState } from 'vuex';
 import SavedGameItem from './SavedGameItem.vue';
+import PopperPod from './PopperPod.vue';
+import LevelFilter from './LevelFilter.vue';
 export default {
     components: {
-        SavedGameItem
+        SavedGameItem,
+        PopperPod,
+        LevelFilter
     },
     data () {
         return {
@@ -55,14 +95,18 @@ export default {
                 'grid-mode',
                 'list-mode'
             ],
-            currentMode: 1
+            currentMode: 1,
+            showDateFilter: false,
+            showLevelFilter: false,
+            selectedLevels: []
         }
     },
     computed: {
         ...mapState(['savedGames']),
         shouldShowGame () {
             return key => {
-                return key.toLowerCase().includes(this.searchParams.name.toLowerCase());
+                return key.toLowerCase().includes(this.searchParams.name.toLowerCase()) && 
+                (this.selectedLevels.includes(key) || this.selectedLevels.length === 0);
             }
         }
     },
@@ -72,8 +116,10 @@ export default {
         },
         deleteGame (game) {
             this.$emit('game-deleted', game);
+        },
+        filterLevels (e) {
+            this.selectedLevels = e;
         }
-        
     }
 }
 </script>

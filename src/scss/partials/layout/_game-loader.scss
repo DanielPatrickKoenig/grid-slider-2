@@ -3,7 +3,7 @@
         box-shadow: 0 2px 0 $border-color, 0 -2px 0 $border-color;;
         position: absolute;
         bottom: 2rem;
-        top: 6rem;
+        top: 8rem;
         left: 1rem;
         right: 1rem;
         overflow: hidden scroll;
@@ -11,8 +11,8 @@
     .load-menu-filters{
         display: flex;
         justify-content: space-between;
-        .load-menu-date-selector{
-            
+        .filter-item{
+            display: flex;
         }
         .load-menu-modes{
             font-size: 1.8rem;
@@ -27,6 +27,12 @@
                 &.selected{
                     color: $selected-item-color;
                 }
+            }
+        }
+        .filter-content{
+            display: flex;
+            > :last-child{
+                margin-left: .5rem;
             }
         }
     }
