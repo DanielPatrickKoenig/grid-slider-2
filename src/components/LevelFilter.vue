@@ -30,6 +30,9 @@ export default {
     methods: {
         getFilteredGames () {
             return Object.keys(this.games).filter(item => this.selectedLevels.includes(this.games[item].currentLevel));
+        },
+        getDescription() {
+            return this.selectedLevels;
         }
     }
 }

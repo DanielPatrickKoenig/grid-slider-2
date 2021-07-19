@@ -13,12 +13,17 @@
                         <PopperPod v-if="showDateFilter">
                             <div class="filter-content">
                                 <div>
-                                    Date Filter
+                                    <DateFilter 
+                                        :games="savedGames"
+                                        @filter="filterDates"
+                                    />
                                 </div>
                                 <a @click="showDateFilter = false"><font-awesome-icon icon="times" /></a>
                             </div>
                         </PopperPod>
-
+                        <div v-if="selectedDates.length">
+                        {{selectedDates.filter(item => item !== null).map(item => [item.month, item.day, item.year].join('/')).join(' - ')}}
+                        </div>
                     </div>
                 </div>
                 <div class="filter-item load-menu-level-selector">
@@ -78,11 +83,13 @@ import { mapState } from 'vuex';
 import SavedGameItem from './SavedGameItem.vue';
 import PopperPod from './PopperPod.vue';
 import LevelFilter from './LevelFilter.vue';
+import DateFilter from './DateFilter.vue';
 export default {
     components: {
         SavedGameItem,
         PopperPod,
-        LevelFilter
+        LevelFilter,
+        DateFilter
     },
     data () {
         return {
@@ -98,7 +105,10 @@ export default {
             currentMode: 1,
             showDateFilter: false,
             showLevelFilter: false,
-            selectedLevels: []
+            levelFilteredGames: [],
+            dateFilteredGames: [],
+            selectedLevels: [],
+            selectedDates: []
         }
     },
     computed: {
@@ -106,7 +116,8 @@ export default {
         shouldShowGame () {
             return key => {
                 return key.toLowerCase().includes(this.searchParams.name.toLowerCase()) && 
-                (this.selectedLevels.includes(key) || this.selectedLevels.length === 0);
+                (this.levelFilteredGames.includes(key) || this.levelFilteredGames.length === 0) &&
+                (this.dateFilteredGames.includes(key) || this.dateFilteredGames.length === 0);
             }
         }
     },
@@ -118,7 +129,12 @@ export default {
             this.$emit('game-deleted', game);
         },
         filterLevels (e) {
-            this.selectedLevels = e;
+            this.levelFilteredGames = e.values;
+            this.selectedLevels = e.description;
+        },
+        filterDates (e) {
+            this.dateFilteredGames = e.values;
+            this.selectedDates = e.description;
         }
     }
 }

@@ -5,10 +5,13 @@ export default {
     },
     methods: {
         onFilter () {
-            this.$emit('filter', this.getFilteredGames())
+            this.$emit('filter', { values: this.getFilteredGames(), description: this.getDescription() });
         },
         getFilteredGames () {
-            
+            return {};  
+        },
+        getDescription () {
+            return '';
         }
     }
 }

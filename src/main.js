@@ -3,7 +3,7 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faBars, faStar, faTimes, faList, faTh } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faStar, faTimes, faList, faTh, faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 Vue.config.productionTip = false
@@ -19,5 +19,7 @@ library.add(faStar);
 library.add(faTimes);
 library.add(faList);
 library.add(faTh);
+library.add(faChevronLeft);
+library.add(faChevronRight);
 
 Vue.component('font-awesome-icon', FontAwesomeIcon);
