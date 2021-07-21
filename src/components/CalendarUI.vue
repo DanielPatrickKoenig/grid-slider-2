@@ -6,13 +6,20 @@
           <a @click="nextMonth"><font-awesome-icon icon="chevron-right" /></a>
       </div>
       <ul>
-          <li v-for="(week, i) in monthArray" :key="i">
-              <label v-for="(day, j) in week" :key="j">
+          <li 
+            v-for="(week, i) in monthArray" 
+            :key="i"
+        >
+              <label 
+                v-for="(d, j) in week" 
+                :key="j"
+                :class="{'selected-day': currentDay === d && currentMonth === selectedMonth && currentYear === selectedYear}"
+            >
                   <a
-                    v-if="day > 0"
-                    @click="onSelected(day)"
+                    v-if="d > 0"
+                    @click="onSelected(d)"
                 >
-                    {{day}}
+                    {{d}}
                 </a>
               </label>
           </li>
@@ -32,17 +39,23 @@ export default {
             type: Number,
             default: new Date().getMonth()
         },
-        day: {
-            type: Number,
-            default: new Date().getDate()
-        }
+        day: Number
     },
     data () {
         return {
             currentYear: this.year,
             currentMonth: this.month,
             currentDay: this.day,
+            selectedYear: this.year,
+            selectedMonth: this.month,
             monthLabels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+        }
+    },
+    watch: {
+        day () {
+            console.log('date watched');
+            this.currentDay = this.day;
+            this.$forceUpdate();
         }
     },
     computed: {
@@ -69,6 +82,8 @@ export default {
         onSelected (day) {
             this.currentDay = day;
             this.$emit('selection', { year: this.currentYear, month: this.currentMonth, day: this.currentDay });
+            this.selectedYear = this.currentYear;
+            this.selectedMonth = this.currentMonth;
         } 
     }
 }

@@ -15,14 +15,17 @@
                                 <div>
                                     <DateFilter 
                                         :games="savedGames"
+                                        :range="selectedDates"
+                                        :mode="dateRangeMode"
                                         @filter="filterDates"
                                     />
                                 </div>
                                 <a @click="showDateFilter = false"><font-awesome-icon icon="times" /></a>
                             </div>
                         </PopperPod>
-                        <div v-if="selectedDates.length">
-                        {{selectedDates.filter(item => item !== null).map(item => [item.month, item.day, item.year].join('/')).join(' - ')}}
+                        <div v-if="selectedDates.length && this.selectedDates.length">
+                            {{ selectedDatesLabel }}
+                            <a @click="clearDateFilter"><font-awesome-icon icon="times" /></a>
                         </div>
                     </div>
                 </div>
@@ -108,7 +111,10 @@ export default {
             levelFilteredGames: [],
             dateFilteredGames: [],
             selectedLevels: [],
-            selectedDates: []
+            selectedDates: [],
+            selectedDatesLabel: '',
+            hasDateRange: false,
+            dateRangeMode: null
         }
     },
     computed: {
@@ -117,7 +123,7 @@ export default {
             return key => {
                 return key.toLowerCase().includes(this.searchParams.name.toLowerCase()) && 
                 (this.levelFilteredGames.includes(key) || this.levelFilteredGames.length === 0) &&
-                (this.dateFilteredGames.includes(key) || this.dateFilteredGames.length === 0);
+                (this.dateFilteredGames.includes(key) || (this.selectedDates.length === 0 && this.dateFilteredGames.length === 0));
             }
         }
     },
@@ -134,7 +140,14 @@ export default {
         },
         filterDates (e) {
             this.dateFilteredGames = e.values;
-            this.selectedDates = e.description;
+            this.selectedDates = e.description.dates;
+            this.dateRangeMode = e.description.mode;
+            this.selectedDatesLabel = this.selectedDates.filter(item => item !== null).map(item => [item.month + 1, item.day, item.year].join('/')).join(' - ');
+        },
+        clearDateFilter () {
+            this.selectedDates = [];
+            this.dateFilteredGames = [];
+            this.dateRangeMode = null;
         }
     }
 }

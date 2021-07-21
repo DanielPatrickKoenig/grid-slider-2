@@ -1,5 +1,8 @@
 <template>
   <div>
+      <div>
+          {{rangeString}}
+      </div>
       <select 
         v-model="currentMode"
         @change="onModeChange"
@@ -36,37 +39,57 @@ const modes = {
 }
 export default {
     extends: BaseFilter,
+    props: {
+        range: Array,
+        mode: String
+    },
     components: {
         CalendarUI
     },
     data () {
         return {
             start: {
-                year: baseDate.getFullYear(),
-                month: baseDate.getMonth(),
-                date: baseDate.getDate()
+                year: this.range && this.range[0] ? this.range[0].year : baseDate.getFullYear(),
+                month: this.range && this.range[0] ? this.range[0].month : baseDate.getMonth(),
+                date: this.range && this.range[0] ? this.range[0].day : -1
             },
             end: {
-                year: baseDate.getFullYear(),
-                month: baseDate.getMonth(),
-                date: baseDate.getDate()
+                year: this.range && this.range[1] ? this.range[1].year : baseDate.getFullYear(),
+                month: this.range && this.range[1] ? this.range[1].month : baseDate.getMonth(),
+                date: this.range && this.range[1] ? this.range[1].day : -1
             },
             dateModes: modes,
-            currentMode: modes.NONE,
+            currentMode: this.mode ? this.mode : modes.NONE,
             dates: [
                 null,
                 null
-            ]
+            ],
+            rangeString: 'No selected dates'
         }
+    },
+    mounted () {
+        if (this.currentMode !== this.dateModes.NONE) {
+            console.log('a');
+            this.dates[0] = { month: this.start.month, day: this.start.date, year: this.start.year };
+            if(this.currentMode !== this.dateModes.BETWEEN){
+                console.log('b');
+                this.dates[1] = { month: this.end.month, day: this.end.date, year: this.end.year };
+            }
+        }
+        console.log('c');
+        console.log(this.dates);
+        this.setRangeString();
     },
     methods: {
         onModeChange () {
-            if([this.dateModes.BETWEEN, this.dateModes.NONE].includes(this.currentMode)){
-                this.dates[1] = null;
-            }
-            if(this.currentMode === this.dateModes.BETWEEN){
-                this.dates[0] = null;
-            }
+            this.dates = [
+                null,
+                null
+            ];
+            this.start.date = -1;
+            this.end.date = -1;
+            this.setRangeString();
+            this.$forceUpdate();
         },
         startSelected (e) {
             this.dates[0] = e;
@@ -114,10 +137,22 @@ export default {
                     break;
                 }
             }
+            this.setRangeString();
             return filteredGames;
         },
         getDescription() {
-            return this.dates;
+            return { mode: this.currentMode, dates: this.dates };
+        },
+        setRangeString () {
+            if(this.currentMode === this.dateModes.NONE){
+                this.rangeString = 'No selected dates'
+            }
+            else {
+                const startString = this.dates[0] && this.dates[0].day > 0 ? [this.dates[0].month + 1, this.dates[0].day, this.dates[0].year].join('/') : 'No date selected';
+                const endString = this.dates[1] && this.dates[1].day > 0 ? [this.dates[1].month + 1, this.dates[1].day, this.dates[1].year].join('/') : 'No date selected';
+                this.rangeString = this.currentMode === this.dateModes.BETWEEN ? `${startString} - ${endString}` : `${startString}`;
+            }
+              
         }
     }
 }
