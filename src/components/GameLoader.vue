@@ -142,7 +142,7 @@ export default {
             this.dateFilteredGames = e.values;
             this.selectedDates = e.description.dates;
             this.dateRangeMode = e.description.mode;
-            this.selectedDatesLabel = this.selectedDates.filter(item => item !== null).map(item => [item.month + 1, item.day, item.year].join('/')).join(' - ');
+            this.selectedDatesLabel = this.selectedDates.filter(item => item !== null && item.day > 0).map(item => [item.month + 1, item.day, item.year].join('/')).join(' - ');
         },
         clearDateFilter () {
             this.selectedDates = [];

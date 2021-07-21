@@ -14,6 +14,7 @@
         :year="start.year"
         :month="start.month"
         :day="start.date"
+        :sig="sig"
         @selection="startSelected"
       />
       <CalendarUI 
@@ -21,6 +22,7 @@
         :year="end.year"
         :month="end.month"
         :day="end.date"
+        :sig="sig"
         @selection="endSelected"
       />
   </div>
@@ -64,6 +66,7 @@ export default {
                 null,
                 null
             ],
+            sig: '0',
             rangeString: 'No selected dates'
         }
     },
@@ -71,7 +74,7 @@ export default {
         if (this.currentMode !== this.dateModes.NONE) {
             console.log('a');
             this.dates[0] = { month: this.start.month, day: this.start.date, year: this.start.year };
-            if(this.currentMode !== this.dateModes.BETWEEN){
+            if(this.currentMode === this.dateModes.BETWEEN){
                 console.log('b');
                 this.dates[1] = { month: this.end.month, day: this.end.date, year: this.end.year };
             }
@@ -86,8 +89,7 @@ export default {
                 null,
                 null
             ];
-            this.start.date = -1;
-            this.end.date = -1;
+            this.sig = `${Math.random().toString().split('.').join('')}-${Math.random().toString().split('.').join('')}-${Math.random().toString().split('.').join('')}`
             this.setRangeString();
             this.$forceUpdate();
         },

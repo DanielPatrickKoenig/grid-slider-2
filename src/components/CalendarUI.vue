@@ -39,7 +39,11 @@ export default {
             type: Number,
             default: new Date().getMonth()
         },
-        day: Number
+        day: {
+            type: Number,
+            default: new Date().getDate()
+        },
+        sig: String
     },
     data () {
         return {
@@ -52,9 +56,9 @@ export default {
         }
     },
     watch: {
-        day () {
+        sig: function () {
             console.log('date watched');
-            this.currentDay = this.day;
+            this.currentDay = -1;
             this.$forceUpdate();
         }
     },
