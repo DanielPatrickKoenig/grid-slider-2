@@ -19,7 +19,12 @@
                                         @filter="filterDates"
                                     />
                                 </div>
-                                <a @click="showDateFilter = false"><font-awesome-icon icon="times" /></a>
+                                <a 
+                                    @click="showDateFilter = false"
+                                    class="pod-close"
+                                >
+                                    <font-awesome-icon icon="times" />
+                                </a>
                             </div>
                         </PopperPod>
                         <div 
@@ -45,7 +50,12 @@
                                         @filter="filterLevels"
                                     />
                                 </div>
-                                <a @click="showLevelFilter = false"><font-awesome-icon icon="times" /></a>
+                                <a 
+                                    @click="showLevelFilter = false"
+                                    class="pod-close"
+                                >
+                                    <font-awesome-icon icon="times" />
+                                </a>
                             </div>
                         </PopperPod>
                         <div 

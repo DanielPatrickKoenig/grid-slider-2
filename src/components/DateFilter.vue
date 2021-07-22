@@ -1,14 +1,14 @@
 <template>
   <div>
-      <div>
-          {{rangeString}}
-      </div>
       <select 
         v-model="currentMode"
         @change="onModeChange"
       >
           <option v-for="(mode, key, i) in dateModes" :key="i" :value="mode">{{mode}}</option>
       </select>
+      <div v-if="currentMode !== dateModes.NONE">
+          {{rangeString}}
+      </div>
       <CalendarUI 
         v-if="currentMode !== dateModes.NONE"
         :year="start.year"

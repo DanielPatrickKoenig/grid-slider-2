@@ -7,13 +7,22 @@
         display: flex;
         flex-direction: column;
         > li{
+            &:first-child{
+                border-bottom: 1px solid $form-hint-color;
+            }
             display:flex;
             > label{
                 display: inline-flex;
-                width: 1.5rem;
-                height: 1.5rem;
+                width: 2rem;
+                height: 2rem;
+                justify-content: center;
+                align-items: center;
+                color: $form-hint-color;
+                border-radius: 2rem;
                 &.selected-day{
                     font-weight: bold;
+                    color: white;
+                    background-color: $selected-item-color;
                 }
             }
         }

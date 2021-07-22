@@ -5,11 +5,19 @@
           <label>{{monthLabels[currentMonth]}} {{currentYear}}</label>
           <a @click="nextMonth"><font-awesome-icon icon="chevron-right" /></a>
       </div>
-      <ul>
+      <ul> 
+          <li>
+            <label
+                v-for="(val, i) in daysOfWeek" 
+                :key="i"
+            >
+                {{val}}
+            </label>
+          </li>
           <li 
             v-for="(week, i) in monthArray" 
             :key="i"
-        >
+          >
               <label 
                 v-for="(d, j) in week" 
                 :key="j"
@@ -52,7 +60,8 @@ export default {
             currentDay: this.day,
             selectedYear: this.year,
             selectedMonth: this.month,
-            monthLabels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+            monthLabels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+            daysOfWeek: ['S', 'M', 'T', 'W', 'T', 'F', 'S']
         }
     },
     watch: {

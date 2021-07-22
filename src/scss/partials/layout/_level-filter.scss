@@ -1,0 +1,22 @@
+.level-filter{
+    > li{
+        display: flex;
+        flex-wrap: wrap;
+        input{
+            display: none;
+        }
+        >label{
+            width: 2rem;
+            height: 2rem;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            background-color: $secondary-link;
+            border-radius: 2rem;
+            &.selected{
+                color: white;
+                background-color: $selected-item-color;
+            }
+        }
+    }
+}

@@ -4,7 +4,7 @@
             v-for="(item, i) in uniqueLevels" 
             :key="i"
         >
-            <label>
+            <label :class="{'selected': item.selected}">
                 <input type="checkbox" v-model="item.selected" @change="onFilter" />
                 {{item.level}}
             </label>

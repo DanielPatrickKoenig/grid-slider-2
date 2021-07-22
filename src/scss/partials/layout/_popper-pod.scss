@@ -1,4 +1,7 @@
 .popper-pod-container{
+    .pod-close{
+        max-height: 1.5rem;
+    }
     .popper-pod-blocker{
         position: fixed;
         top:0;
@@ -14,5 +17,21 @@
         z-index: 9;
         padding: .5rem;
         margin: 0 .75rem;
+        box-shadow: 0 0 0 1px $form-hint-color;
+        border-radius: .5rem;
+        &::after{
+            content: '';
+            width: .5rem;
+            height: .5rem;
+            transform: rotate(45deg);
+            position: absolute;
+            top: .75rem;
+            left: -.25rem;
+            box-shadow: -1px 0 0 $form-hint-color, 0 1px 0 $form-hint-color;
+            background-color: $popper-bg;
+        }
+    }
+    .calendar-ui{
+        margin-right: -1.25rem;
     }
 }
