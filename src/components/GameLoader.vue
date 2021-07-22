@@ -15,15 +15,17 @@
                                 <div>
                                     <DateFilter 
                                         :games="savedGames"
-                                        :range="selectedDates"
-                                        :mode="dateRangeMode"
+                                        :selection="{ range: selectedDates, mode: dateRangeMode }"
                                         @filter="filterDates"
                                     />
                                 </div>
                                 <a @click="showDateFilter = false"><font-awesome-icon icon="times" /></a>
                             </div>
                         </PopperPod>
-                        <div v-if="selectedDates.length && this.selectedDates.length">
+                        <div 
+                            v-if="selectedDates.length"
+                            class="selection-label"
+                        >
                             {{ selectedDatesLabel }}
                             <a @click="clearDateFilter"><font-awesome-icon icon="times" /></a>
                         </div>
@@ -39,12 +41,20 @@
                                 <div>
                                     <LevelFilter 
                                         :games="savedGames"
+                                        :selection="{ levels: selectedLevels }"
                                         @filter="filterLevels"
                                     />
                                 </div>
                                 <a @click="showLevelFilter = false"><font-awesome-icon icon="times" /></a>
                             </div>
                         </PopperPod>
+                        <div 
+                            v-if="selectedLevels.length"
+                            class="selection-label"
+                        >
+                            {{ selectedLevels.join(',') }}
+                            <a @click="clearLevelFilter"><font-awesome-icon icon="times" /></a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -148,6 +158,10 @@ export default {
             this.selectedDates = [];
             this.dateFilteredGames = [];
             this.dateRangeMode = null;
+        },
+        clearLevelFilter () {
+            this.selectedLevels = [];
+            this.levelFilteredGames = [];
         }
     }
 }

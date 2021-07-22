@@ -19,7 +19,7 @@ export default {
     extends: BaseFilter,
     data () {
         return {
-            uniqueLevels: uniq(Object.keys(this.games).map(item => this.games[item].currentLevel)).sort().map(item => ({level: item, selected: false}))
+            uniqueLevels: uniq(Object.keys(this.games).map(item => this.games[item].currentLevel)).sort().map(item => ({level: item, selected: this.selection && this.selection.levels.includes(item)}))
         }
     },
     computed: {

@@ -1,7 +1,8 @@
 
 export default {
     props: {
-        games: Object
+        games: Object,
+        selection: Object
     },
     methods: {
         onFilter () {

@@ -41,33 +41,31 @@ const modes = {
 }
 export default {
     extends: BaseFilter,
-    props: {
-        range: Array,
-        mode: String
-    },
     components: {
         CalendarUI
     },
     data () {
         return {
             start: {
-                year: this.range && this.range[0] ? this.range[0].year : baseDate.getFullYear(),
-                month: this.range && this.range[0] ? this.range[0].month : baseDate.getMonth(),
-                date: this.range && this.range[0] ? this.range[0].day : -1
+                year: this.selection && this.selection.range && this.selection.range[0] ? this.selection.range[0].year : baseDate.getFullYear(),
+                month: this.selection && this.selection.range && this.selection.range[0] ? this.selection.range[0].month : baseDate.getMonth(),
+                date: this.selection && this.selection.range && this.selection.range[0] ? this.selection.range[0].day : -1
             },
             end: {
-                year: this.range && this.range[1] ? this.range[1].year : baseDate.getFullYear(),
-                month: this.range && this.range[1] ? this.range[1].month : baseDate.getMonth(),
-                date: this.range && this.range[1] ? this.range[1].day : -1
+                year: this.selection && this.selection.range && this.selection.range[1] ? this.selection.range[1].year : baseDate.getFullYear(),
+                month: this.selection && this.selection.range && this.selection.range[1] ? this.selection.range[1].month : baseDate.getMonth(),
+                date: this.selection && this.selection.range && this.selection.range[1] ? this.selection.range[1].day : -1
             },
             dateModes: modes,
-            currentMode: this.mode ? this.mode : modes.NONE,
+            currentMode: this.selection && this.selection.mode ? this.selection.mode : modes.NONE,
             dates: [
                 null,
                 null
             ],
             sig: '0',
-            rangeString: 'No selected dates'
+            rangeString: 'No selected dates',
+            range: this.selection.range,
+            mode: this.selection.mode
         }
     },
     mounted () {
