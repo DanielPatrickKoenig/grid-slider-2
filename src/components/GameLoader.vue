@@ -1,12 +1,16 @@
 <template>
     <div class="game-loader">
         <div>
-            <input type="text" v-model="searchParams.name" />
+            <input class="search-field" type="text" v-model="searchParams.name" />
         </div>
         <div class="load-menu-filters">
             <div>
                 <div class="filter-item load-menu-date-selector">
-                    <button @click="showDateFilter = true">
+                    <button 
+                        class="secondary"
+                        :class="{active: showDateFilter}"
+                        @click="showDateFilter = true"
+                    >
                         Date
                     </button>
                     <div>
@@ -31,13 +35,17 @@
                             v-if="selectedDates.length"
                             class="selection-label"
                         >
-                            {{ selectedDatesLabel }}
+                            {{ dateSelectionText }}
                             <a @click="clearDateFilter"><font-awesome-icon icon="times" /></a>
                         </div>
                     </div>
                 </div>
                 <div class="filter-item load-menu-level-selector">
-                    <button @click="showLevelFilter = true">
+                    <button
+                        class="secondary"
+                        :class="{active: showLevelFilter}" 
+                        @click="showLevelFilter = true"
+                    >
                         Level
                     </button>
                     <div>
@@ -133,6 +141,7 @@ export default {
             selectedLevels: [],
             selectedDates: [],
             selectedDatesLabel: '',
+            selectedDatesContext: '',
             hasDateRange: false,
             dateRangeMode: null
         }
@@ -145,6 +154,10 @@ export default {
                 (this.levelFilteredGames.includes(key) || this.levelFilteredGames.length === 0) &&
                 (this.dateFilteredGames.includes(key) || (this.selectedDates.length === 0 && this.dateFilteredGames.length === 0));
             }
+        },
+        dateSelectionText () {
+            const labelContext = this.selectedDatesContext === '' ? '' : `${this.selectedDatesContext} `;
+            return `${labelContext}${this.selectedDatesLabel}`;
         }
     },
     methods: {
@@ -162,12 +175,14 @@ export default {
             this.dateFilteredGames = e.values;
             this.selectedDates = e.description.dates;
             this.dateRangeMode = e.description.mode;
+            this.selectedDatesContext = e.context;
             this.selectedDatesLabel = this.selectedDates.filter(item => item !== null && item.day > 0).map(item => [item.month + 1, item.day, item.year].join('/')).join(' - ');
         },
         clearDateFilter () {
             this.selectedDates = [];
             this.dateFilteredGames = [];
             this.dateRangeMode = null;
+            this.selectedDatesContext = '';
         },
         clearLevelFilter () {
             this.selectedLevels = [];

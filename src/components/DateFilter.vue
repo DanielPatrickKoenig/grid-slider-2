@@ -143,6 +143,9 @@ export default {
         getDescription() {
             return { mode: this.currentMode, dates: this.dates };
         },
+        getContext () {
+            return this.currentMode !== this.dateModes.BETWEEN ? this.currentMode : '';
+        },
         setRangeString () {
             if(this.currentMode === this.dateModes.NONE){
                 this.rangeString = 'No selected dates'

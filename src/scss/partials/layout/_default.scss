@@ -17,6 +17,15 @@ button{
         background-color: $secondary-link;
 
     }
+    &.active{
+        background-color: $selected-item-color;
+        color: $reverse-color;
+    }
+}
+select{
+    font-size: 1rem;
+    padding: .3rem .8rem .3rem .5rem;
+    border: none;
 }
 .inner-page{
     margin-top: $navHeight;

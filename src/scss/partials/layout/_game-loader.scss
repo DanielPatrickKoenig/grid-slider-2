@@ -3,10 +3,16 @@
         box-shadow: 0 2px 0 $border-color, 0 -2px 0 $border-color;;
         position: absolute;
         bottom: 2rem;
-        top: 8rem;
+        top: 9rem;
         left: 1rem;
         right: 1rem;
         overflow: hidden scroll;
+    }
+    .search-field{
+        width: 98%;
+        height: 1.5rem;
+        border-radius: .2rem;
+        margin: .5rem 0
     }
     .load-menu-filters{
         display: flex;
@@ -32,7 +38,7 @@
         .filter-content{
             display: flex;
             > :last-child{
-                margin-left: .5rem;
+                margin-left: 1.5rem;
             }
         }
     }
@@ -117,6 +123,18 @@
                 }
                 
             }
+        }
+    }
+
+    .selection-label{
+        padding: .25rem .5rem;
+        background-color: $clear;
+        color: $label-color;
+        border-radius: .125rem;
+        margin-left: .125rem;
+        text-transform: uppercase;
+        > a{
+            color: $error-color;
         }
     }
 }

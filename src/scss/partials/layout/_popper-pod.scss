@@ -1,6 +1,7 @@
 .popper-pod-container{
     .pod-close{
         max-height: 1.5rem;
+        color: $error-color;
     }
     .popper-pod-blocker{
         position: fixed;
